@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block maincontent %}
+
+<div class="radio-inputs">
+    <label class="radio">
+        <input type="radio" name="radio" checked onclick="showSection('posted-jobs')" />
+        <span class="name">Posted Jobs</span>
+    </label>
+    <label class="radio">
+        <input type="radio" name="radio" onclick="showSection('my-assignments')" />
+        <span class="name">My Assignments</span>
+    </label>
+</div>
+
+<!-- Posted Jobs Section -->
+<div id="posted-jobs" class="job-section">
+    <h2>My Posted Jobs</h2>
+    <div class="card-container">
+        {% for j in posted_jobs %}
+        <article class="card">
+            <span>@{{ j.user.username }}</span>
+            <section class="card__hero">
+                <header class="card__hero-header"></header>
+                <p class="card__job-title">{{ j.title }}</p>
+                {{ j.budget }}
+            </section>
+    
+            <footer class="card__footer">
+                <div class="card__job-summary">
+                    <div class="card__job">
+                        <p class="card__job-title">
+                            {{ j.description|truncatewords:100 }}
+                        </p>
+                    </div>
+                    <!-- Skill Buttons -->
+                    <div class="skill-buttons">
+                        {% for skill in j.skills_required %}
+                        <span class="skill-badge skill-color-{{ forloop.counter|slice:":5" }}">
+                            {{ skill }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+                <a href="{% url 'job' j.id%}"><button class="card__btn">View</button></a>
+
+            </footer>
+        </article>
+        
+        {% endfor %}
+        
+    </div>
+</div>
+
+<!-- My Assignments Section -->
+<div id="my-assignments" class="job-section" style="display: none;">
+    <h2>My Assignments</h2>
+    <div class="card-container">
+        {% for j in assigned_jobs %}
+        <article class="card">
+            <span>@{{ j.user.username }}</span>
+            <section class="card__hero">
+                <header class="card__hero-header"></header>
+                <p class="card__job-title">{{ j.title }}</p>
+                {{ j.budget }}
+            </section>
+    
+            <footer class="card__footer">
+                <div class="card__job-summary">
+                    <div class="card__job">
+                        <p class="card__job-title">
+                            {{ j.description|truncatewords:100 }}
+                        </p>
+                    </div>
+                    <!-- Skill Buttons -->
+                    <div class="skill-buttons">
+                        {% for skill in j.skills_required %}
+                        <span class="skill-badge skill-color-{{ forloop.counter|slice:":5" }}">
+                            {{ skill }}
+                        </span>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+                <a href="{% url 'job' j.id%}"><button class="card__btn">View</button></a>
+
+            </footer>
+        </article>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .radio-inputs {
+        display: flex;
+        background-color: #eee;
+        padding: 5px;
+        border-radius: 10px;
+        width: 300px;
+        margin: 20px auto;
+    }
+
+    .radio-inputs .radio {
+        flex: 1;
+        text-align: center;
+    }
+
+    .radio-inputs .radio input {
+        display: none;
+    }
+
+    .radio-inputs .radio .name {
+        display: block;
+        padding: 8px;
+        cursor: pointer;
+        border-radius: 8px;
+        transition: 0.3s;
+    }
+
+    .radio-inputs .radio input:checked + .name {
+        background-color: white;
+        font-weight: bold;
+    }
+
+    .job-section {
+        margin-top: 20px;
+        padding: 20px;
+    }
+
+    .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .job-card {
+        background: #f9f9f9;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+
+    .job-card h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .job-card p {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .job-card span {
+        font-size: 12px;
+        color: #888;
+    }
+    .skill-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .skill-badge {
+        color: #fff;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        transition: background-color 0.3s ease;
+    }
+    
+    .skill-badge:hover {
+        opacity: 0.9;
+    }
+    
+    /* Example colors for buttons */
+    .skill-color-1 {
+        background-color: #6f49ff;
+    }
+    
+    .skill-color-2 {
+        background-color: #ff7b54;
+    }
+    
+    .skill-color-3 {
+        background-color: #34a853;
+    }
+    
+    .skill-color-4 {
+        background-color: #fbbc05;
+    }
+    
+    .skill-color-5 {
+        background-color: #ea4335;
+    }
+    
+</style>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function showSection(sectionId) {
+        document.getElementById('posted-jobs').style.display = 'none';
+        document.getElementById('my-assignments').style.display = 'none';
+
+        document.getElementById(sectionId).style.display = 'block';
+    }
+</script>
+{% endblock %}

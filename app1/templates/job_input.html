@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Job</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: rgb(238, 69, 69);;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color:rgb(245, 15, 15);;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .button-checkbox {
+            position: relative;
+            display: inline-block;
+        }
+
+        .button-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .button-checkbox span {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 2px solid rgb(248, 83, 83);
+            border-radius: 5px;
+            color:rgb(242, 70, 87);
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button-checkbox input[type="checkbox"]:checked + span {
+            background-color:rgb(238, 69, 69);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Create a Job</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="title">Job Title</label>
+                <input type="text" id="title" name="title" placeholder="Enter job title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Job Description</label>
+                <textarea id="description" name="description" rows="5" placeholder="Enter job description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="document">Attach Document</label>
+                <input type="file" id="document" name="document" accept=".pdf,.txt,.docx">
+            </div>
+            <div class="form-group">
+                <label for="deadline">Deadline</label>
+                <input type="date" id="deadline" name="deadline" required>
+            </div>
+            <div class="form-group">
+                <label for="budget">Budget</label>
+                <input type="number" id="budget" name="budget" step="0.01" placeholder="Enter budget in RS" required>
+            </div>
+            <div class="form-group">
+                <label>Select Required Skills</label>
+                <div class="skills-container">
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Web Development">
+                        <span>Web Development</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="App Development">
+                        <span>App Development</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Photography">
+                        <span>Photography</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Video Editing">
+                        <span>Video Editing</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Database Management">
+                        <span>Database Management</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="UI/UX">
+                        <span>UI/UX</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Content Creation">
+                        <span>Content Creation</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Report Writing">
+                        <span>Report Writing</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit">Create Job</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

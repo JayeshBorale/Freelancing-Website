@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #B3CFE2;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #F8F8F8;
+            padding: 40px;
+            width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            background-color: rgb(186, 92, 98);
+            border: none;
+            color: #fff;
+            padding: 10px;
+            width: 100%;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: rgb(142, 55, 55);
+        }
+
+        .switch-to-login {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .switch-to-login a {
+            text-decoration: none;
+            color: rgb(142, 55, 55);
+            font-weight: bold;
+        }
+
+        .switch-to-login a:hover {
+            color: rgb(186, 92, 98);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Create Account</h2>
+        <form  method="POST">
+             {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="email">first name</label>
+            <input type="text" id="last_name" name="first_name" required>
+
+            <label for="email">Last name</label>
+            <input type="text" id="first_name" name="last_name" required>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            
+            <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+        
+        <div class="switch-to-login">
+            <p>Already have an account? <a href="/login">Login here</a></p>
+            <br>
+            <h3>{{error}}</h3>
+        </div>
+    </div>
+</body>
+</html>

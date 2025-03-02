@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block maincontent %}
+<div class="search-container">
+    <input type="text" class="search-input" placeholder="Search for Jobs here........">
+    <button class="search-button">Search</button>
+</div>
+<br>
+<br>
+<div class="card-container">
+    {% for j in jobs %}
+    <article class="card">
+        <span>@{{ j.user.username }}</span>
+        <section class="card__hero">
+            <header class="card__hero-header"></header>
+            <p class="card__job-title">{{ j.title }}</p>
+            {{ j.budget }}
+        </section>
+
+        <footer class="card__footer">
+            <div class="card__job-summary">
+                <div class="card__job">
+                    <p class="card__job-title">
+                        {{ j.description|truncatewords:100 }}
+                    </p>
+                </div>
+                <!-- Skill Buttons -->
+                <div class="skill-buttons">
+                    {% for skill in j.skills_required %}
+                    <span class="skill-badge skill-color-{{ forloop.counter|slice:":5" }}">
+                        {{ skill }}
+                    </span>
+                    {% endfor %}
+                </div>
+                
+            </div>
+            <a href="{% url 'job' j.id%}"><button class="card__btn">View</button></a>
+        </footer>
+    </article>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .skill-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .skill-badge {
+        color: #fff;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        transition: background-color 0.3s ease;
+    }
+    
+    .skill-badge:hover {
+        opacity: 0.9;
+    }
+    
+    /* Example colors for buttons */
+    .skill-color-1 {
+        background-color: #6f49ff;
+    }
+    
+    .skill-color-2 {
+        background-color: #ff7b54;
+    }
+    
+    .skill-color-3 {
+        background-color: #34a853;
+    }
+    
+    .skill-color-4 {
+        background-color: #fbbc05;
+    }
+    
+    .skill-color-5 {
+        background-color: #ea4335;
+    }
+    
+</style>
+{% endblock %}

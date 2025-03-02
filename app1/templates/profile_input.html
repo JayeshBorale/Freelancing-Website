@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .form-container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            color: #fff;
+            background-color: rgb(238, 69, 69);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form-group button:hover {
+            background-color: rgb(245, 15, 15);
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .button-checkbox {
+            position: relative;
+            display: inline-block;
+        }
+
+        .button-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .button-checkbox span {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 14px;
+            border: 2px solid rgb(248, 83, 83);
+            border-radius: 5px;
+            color: rgb(242, 70, 87);
+            background-color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .button-checkbox input[type="checkbox"]:checked + span {
+            background-color: rgb(238, 69, 69);
+            color: #fff;
+        }
+        .form-group-buttons {
+            display: flex;
+            gap: 10px; /* Space between the buttons */
+            justify-content: center; /* Center the buttons */
+        }
+        
+        .form-group-buttons button {
+            flex: 1; /* Equal width for buttons */
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>User Profile</h1>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Introduction -->
+            <div class="form-group">
+                <label for="intro">Introduction</label>
+                <textarea id="intro" name="intro" rows="4" placeholder="Write about yourself...">{{ introduction }}</textarea>
+            </div>
+    
+            <!-- Skills -->
+            <div class="form-group">
+                <label>Skills</label>
+                <div class="skills-container">
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Web Development" 
+                            {% if "Web Development" in skills %}checked{% endif %}>
+                        <span>Web Development</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="App Development" 
+                            {% if "App Development" in skills %}checked{% endif %}>
+                        <span>App Development</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Photography" 
+                            {% if "Photography" in skills %}checked{% endif %}>
+                        <span>Photography</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Video Editing" 
+                            {% if "Video Editing" in skills %}checked{% endif %}>
+                        <span>Video Editing</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Database Management" 
+                            {% if "Database Management" in skills %}checked{% endif %}>
+                        <span>Database Management</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="UI/UX" 
+                            {% if "UI/UX" in skills %}checked{% endif %}>
+                        <span>UI/UX</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Content Creation" 
+                            {% if "Content Creation" in skills %}checked{% endif %}>
+                        <span>Content Creation</span>
+                    </label>
+                    <label class="button-checkbox">
+                        <input type="checkbox" name="skills" value="Report Writing" 
+                            {% if "Report Writing" in skills %}checked{% endif %}>
+                        <span>Report Writing</span>
+                    </label>
+                </div>
+            </div>
+    
+            <!-- Resume Upload -->
+            <div class="form-group">
+                <label for="resume">Upload Resume</label>
+                <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx">
+                {% if resume %}
+                    <p>Current Resume: <a href="{{ resume }}" target="_blank">View</a></p>
+                {% endif %}
+            </div>
+    
+            <!-- Experience -->
+            <div class="form-group">
+                <label for="experience">Years of Experience</label>
+                <input type="number" id="experience" name="experience" min="0" placeholder="Enter years of experience"  value="{{ experience }}">
+            </div>
+    
+            <!-- Submit -->
+            <div class="form-group form-group-buttons">
+                <button type="submit">Submit</button>
+                <button type="button" ><a href="{% url 'home' %}" style="text-decoration:none; color:white;">Skip</a></button>
+            </div>
+        </form>
+    </div>
+    
+</body>
+</html>

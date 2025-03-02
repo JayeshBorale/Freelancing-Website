@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block extra_styles %}
+<style>
+    /* Profile Card Container */
+    .profile-cards-container {
+        display: flex;
+        flex-wrap: wrap; /* Allow wrapping to the next line */
+        gap: 100px; /* Space between cards */
+        justify-content: left; /* Align the cards to the left */
+        overflow-y: hidden; /* Hide vertical scrollbar */
+        overflow-x: auto; /* Allow horizontal scrolling but hide scrollbar */
+        padding: 10px; /* Add some padding around the container */
+    }
+
+    /* Hide the scrollbar for WebKit browsers (Chrome, Safari) */
+    .profile-cards-container::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* For Firefox */
+    .profile-cards-container {
+        scrollbar-width: none; /* Hide scrollbar in Firefox */
+    }
+
+    /* Profile Card Styles */
+    .custom-profile-card {
+        width: 300px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: 0.3s ease;
+    }
+
+    .custom-profile-card:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Profile Image */
+    .custom-profile-card .custom-profile-image {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    /* Profile Info */
+    .custom-profile-card .custom-profile-info {
+        padding: 20px;
+    }
+
+    .custom-profile-card .custom-profile-info h3 {
+        font-size: 20px;
+        color: #333333;
+        margin: 0;
+    }
+
+    .custom-profile-card .custom-profile-info p {
+        font-size: 14px;
+        color: #777777;
+        margin: 8px 0 16px;
+    }
+
+    .custom-profile-card .custom-profile-info .custom-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #ffffff;
+        background-color: #4CAF50;
+        border-radius: 25px;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+
+    .custom-profile-card .custom-profile-info .custom-btn:hover {
+        background-color: #45a049;
+    }
+</style>
+{% endblock %}
+
+
+{% block maincontent %}
+<div class="profile-cards-container">
+    {% for p in profile %}
+    <div class="custom-profile-card">
+        <!-- Upper Half: Profile Image -->
+        <img src="https://www.thewowstyle.com/wp-content/uploads/2015/01/nature-images..jpg" alt="Profile Image" class="custom-profile-image">
+
+        <!-- Lower Half: Profile Information -->
+        <div class="custom-profile-info">
+            <h3>{{ p.user.first_name }} {{ p.user.last_name }}</h3>
+            <p>
+                {% if p.skills %}
+                    {% for skill in p.skills %}
+                        {{ skill }}{% if not forloop.last %} | {% endif %}
+                    {% endfor %}
+                {% else %}
+                    No skills added.
+                {% endif %}
+            </p>
+            <a href="{% url 'user_profile' pk=p.user.id %}" class="custom-btn">View</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

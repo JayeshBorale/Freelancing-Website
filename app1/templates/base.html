@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelance Layout</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_styles %}
+    {% endblock %}
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="profile-card">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="Profile Image" class="profile-pic">
+            <h2>{{ request.user.username }}</h2>
+            <p>{{ request.user.first_name }} {{ request.user.last_name }}</p><br>
+            <p>Some description here<br><br>
+            <a href="" class="profile-button">My Profile</a>
+        </div><br>
+    
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'myjobs' %}">Jobs</a></li>
+                <li><a href="{% url 'profiles' %}">Network</a></li>
+                <li><a href="">Notifications</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+
+        <!-- Main Feed Section -->
+        <div class="main-feed">
+            {% block maincontent %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <script>
+        
+    </script>
+
+    {% block extra_scripts %}
+    {% endblock %}
+</body>
+</html>

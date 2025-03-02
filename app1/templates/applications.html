@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block maincontent %}
+Applications for {{ job.title }} <br>
+{% for a in application %}
+<div class="application-row">
+    <p><a href="{% url 'user_profile' pk=a.sending_user.id%}">{{ a.sending_user.first_name }}</a> has applied for your job <strong>{{ job.title }}</strong>. </p>
+    <form method="post" style="display: inline;">
+        {% csrf_token %}
+    {% if a.status == "accepted" %}
+    <button type="" name="action" value="accept" class="accept">Accepted</button>
+    {% elif a.status == "rejected"%}
+    <button type="" name="action" value="reject" class="reject">Rejected</button>
+    {% else %}
+    <button type="submit" name="action" value="accept" class="accept">Accept</button>
+    <button type="submit" name="action" value="reject" class="reject">Reject</button>
+
+    {% endif %}
+    </form>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .application-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 5px 0;
+        font-size: 14px;
+    }
+
+    .application-row p {
+        margin: 0;
+        flex: 1; /* Takes remaining space */
+    }
+
+    .application-row button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-left: 5px;
+    }
+
+    .accept {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    .accept:hover {
+        background-color: #45a049;
+    }
+
+    .reject {
+        background-color: #f44336;
+        color: white;
+    }
+
+    .reject:hover {
+        background-color: #e53935;
+    }
+</style>
+{% endblock %}

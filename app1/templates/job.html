@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static%}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/job.css' %}">
+{% endblock %}
+
+{% block maincontent %}
+<div class="job-container">
+    <div class="job-header">
+        <h1 class="job-title">{{ job.title }}</h1>
+        <div class="job-header-meta">
+            <p class="job-posted-by">Posted by: <span>{{ job.user.username }}</span></p>
+            <span class="job-status {{ job.status|lower }}">{{ job.status }}</span>
+        </div>
+    </div>
+    <div class="skill-buttons">
+        {% for skill in job.skills_required %}
+            <span class="skill-badge skill-color-{{ forloop.counter|slice:":5" }}">
+                {{ skill }}
+            </span>
+        {% endfor %}
+    </div>
+    <div class="job-description-section">
+        <h3>Job Description</h3>
+        <p>{{ job.description }}</p>
+    </div>
+    <div class="job-other-details">
+        <p><strong>Budget:</strong> ${{ job.budget }}</p>
+        <p><strong>Posted on:</strong> {{ job.time_posted|date:"F j, Y, g:i a" }}</p>
+        <p><strong>Deadline:</strong> {{ job.deadline|date:"F j, Y" }}</p>
+    </div>
+    {% if job.document %}
+    <div class="job-document-section">
+        <strong>Attached Document:</strong> 
+        <a href="{{ job.document.url }}" target="_blank">View Document</a>
+    </div>
+    {% endif %}
+
+    {% if job.user == request.user %}
+    <div class="submit-button-container">
+        <a href="{% url 'applications' job.id %}"> <button class="submit-button" type="submit">View application</button></a>
+    </div>
+    
+    {% elif application %}
+    <div class="submit-button-container">
+        <button class="submit-button" type="submit">Applied</button>
+    </div>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="submit-button-container">
+            <button class="submit-button" type="submit">Apply</button>
+        </div>
+    </form>
+{% endif %}
+
+</div>
+</div>
+
+<!-- Submit Button Section -->
+<
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+
+</style>
+{% endblock %}

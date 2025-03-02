@@ -1,0 +1,160 @@
+.job-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: linear-gradient(to bottom right, #ffffff, #f2f2f2);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.job-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.job-header-meta {
+    text-align: right;
+}
+
+.job-posted-by {
+    font-size: 16px;
+    margin: 0;
+    color: #34495e;
+}
+
+.job-posted-by span {
+    font-weight: 600;
+    color: #3498db;
+}
+
+.job-status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin-top: 10px;
+}
+
+.job-status.open {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.job-status.closed {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.job-details p, 
+.job-other-details p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 10px 0;
+    color: #34495e;
+}
+
+.job-description-section h3 {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #2980b9;
+}
+
+.job-description-section p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #555;
+    margin-top: 10px;
+}
+
+.job-document-section a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.job-document-section a:hover {
+    background-color: #0056b3;
+}
+.skill-buttons {
+display: flex;
+flex-wrap: wrap;
+gap: 0.5rem;
+margin-top: 0.5rem;
+}
+
+.skill-badge {
+color: #fff;
+padding: 0.25rem 0.5rem;
+border-radius: 0.5rem;
+font-size: 0.75rem;
+font-weight: 600;
+text-transform: capitalize;
+transition: background-color 0.3s ease;
+}
+
+.skill-badge:hover {
+opacity: 0.9;
+}
+
+/* Example colors for buttons */
+.skill-color-1 {
+background-color: #6f49ff;
+}
+
+.skill-color-2 {
+background-color: #ff7b54;
+}
+
+.skill-color-3 {
+background-color: #34a853;
+}
+
+.skill-color-4 {
+background-color: #fbbc05;
+}
+
+.skill-color-5 {
+background-color: #ea4335;
+}
+
+.submit-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
