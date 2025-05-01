@@ -9,6 +9,7 @@ from django.views.generic import View
 from django.contrib import messages
 from .models import *
 
+
 class Homeview(LoginRequiredMixin,View):
     login_url='login'
     def get(self,request):
@@ -166,6 +167,14 @@ class User_Profile_View(View):
             profile.skills = profile.skills.split(',') 
         
         return render(request,'user_profile.html',{'profile':profile})
+    
+    def post(self,request,pk):
+        
+        profile=get_object_or_404(Profile,user_id=pk)
+        if 'profile_pic' in request.FILES:
+            profile.profile_pic = request.FILES['profile_pic']
+            profile.save()
+        return redirect('user_profile', request.user.id)
 
 class Myjobs(View):
     def get(self,request):
@@ -248,5 +257,8 @@ class WorkDashboard(View):
             
             return redirect('work_dashboard', id=job.id)
 
-        
+        elif action == 'request_payout':
+            job.payout_request=True
+            job.save()
+
         return redirect('work_dashboard', id=job.id)

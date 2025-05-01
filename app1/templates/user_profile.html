@@ -3,9 +3,22 @@
 {% block maincontent %}
 <div class="profile-container">
     <div class="profile-header">
-        {% if profile.profile_pic %}
-            <img src="{{ profile.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+            {% if profile.profile_pic%}
+            <img src="{{ profile.profile_pic.url}}" alt="Profile Picture" class="profile-pic">
+            {% else %}
+    <div class="profile-pic-wrapper">
+        <img src="https://i.pinimg.com/736x/b1/48/8f/b1488fdac4488b4a116c6964c1735f60.jpg" alt="Profile Picture" class="profile-pic">
+        
+        {% if request.user == profile.user %}
+        <form method="POST" style="display:inline;" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="profile_pic" id="profile_pic_input" style="display: none;" onchange="this.form.submit();">
+            <button type="button" onclick="document.getElementById('profile_pic_input').click();" style="padding: 5px 10px; font-size: 20px; border: none; background: transparent; cursor: pointer;">➕</button>
+        </form>
         {% endif %}
+    </div>
+{% endif %}
+
         <h2>{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
     </div>
 
@@ -59,7 +72,7 @@
         height: 130px;
         object-fit: cover;
         border-radius: 50%;
-        border: 3px solid #4CAF50;
+        
         margin-bottom: 10px;
     }
 

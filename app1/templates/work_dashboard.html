@@ -81,13 +81,22 @@
         </form>
     </div>
 
-    {% if request.user == job.working_user and output_docs  %}
+    {% if request.user == job.working_user and output_docs and not job.payout_request %}
     <form method="post" style="margin-top: 20px;">
         {% csrf_token %}
         <button type="submit" name="action" value="request_payout" class="payout-button">Request for Payout</button>
     </form>
-{% endif %}
+    {% endif %}
+    {% if request.user == job.working_user and output_docs and  job.payout_request  %}
+    <button  style="margin-top: 20px;" class="payout-button">Requested</button>
+    {%endif %}
     
+
+    {% if request.user == job.user  and  job.payout_request %}
+    <p style="margin-top: 20px;"><h3> Payment has been requested by {{job.working_user.username}}</h3></p>
+    <button type="submit" name="action" value="payment" class="payout-button" style="margin-top: 20px;">Pay {{job.budget}} to {{job.working_user.username}}</button>
+
+    {% endif %}
 
     
     

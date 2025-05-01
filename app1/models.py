@@ -61,15 +61,15 @@ class Job(models.Model):
 
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='jobs')  # The user who posted the job
     title = models.CharField(max_length=255)  # Job title
-    description = models.TextField()  # Job description, can be lengthy
+    description = models.TextField()  # Job description
     document = models.FileField(upload_to='job_documents/', blank=True, null=True)  # Optional document attachment
     time_posted = models.DateTimeField(auto_now_add=True)  # Time when the job was posted
-    deadline = models.DateField(blank=True, null=True)  # Optional deadline for the job
+    deadline = models.DateField(blank=True, null=True)  # deadline for the job
     budget = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Budget for the job
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='open')  # Job status
     skills_required = models.CharField(max_length=255, blank=True, null=True)  # Skills required for the job
     working_user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='working_jobs')  # The user currently working on the job
-
+    payout_request = models.BooleanField(default=False)
     def __str__(self):
         return self.title
 
