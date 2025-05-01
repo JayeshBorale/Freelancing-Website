@@ -1,0 +1,140 @@
+Project Title: Freelancing Website
+Team Members:
+
+	1.	Jayesh Borale 
+	2.	Kunal Chaudhari 
+	3.	Vaishnav Patil 
+	4.	Yashodip Chaudhari 
+	5.	Hardik Pawar  
+
+Week 1:(24/02/2025 to 08/03/2025)
+	
+		Introduction
+		Problem Statement:
+		Freelancers and clients often struggle to find trustworthy platforms that support real-time collaboration, streamlined job handling, and reliable communication. The aim of this project is to develop a freelancing website that provides an efficient and user-friendly solution for job posting and execution.
+		Objectives:
+		•	Develop a platform for clients to post jobs and freelancers to apply.
+		•	Enable job tracking and management through a dynamic work dashboard.
+		•	Implement real-time chat between freelancers and clients.
+		•	Maintain user profiles for tracking jobs and experience.
+		Application:
+		•	Freelancers looking for project-based opportunities.
+		•	Clients and businesses needing skilled professionals for short-term work.
+
+
+Week 2:(10/03/2025 to 22/03/2025)
+	
+	Literature Survey 
+		Background:
+		Freelance platforms serve as intermediaries between clients and freelancers, enabling remote work opportunities across various fields such as programming, design, writing, and marketing. These platforms offer tools for job posting, bidding, communication, and payment management. However, several challenges still persist, such as:
+		•	High service charges: Freelancers often lose 10–20% of their earnings as commission fees.
+		•	Lack of transparent communication: Limited or delayed communication features often hamper project progress.
+		•	Inefficient job tracking: Many platforms do not provide real-time work dashboards or status tracking, making it difficult to monitor progress.
+		•	Complex user interfaces: Some platforms are not beginner-friendly and overwhelm users with options.
+		•	Dispute resolution limitations: There’s often limited support for resolving disputes over payments or deliverables.
+		These drawbacks highlight the need for a streamlined platform that offers real-time communication, intuitive dashboards, and a transparent workflow system.
+		Existing Systems:
+		•	Upwork:
+		One of the most popular platforms, Upwork provides a large pool of freelancers and clients. It offers features like milestone-based contracts, time-tracking tools, and feedback systems. However, it charges up to 20% commission from freelancers and has a complicated onboarding and bidding process. The chat feature is limited to basic communication and lacks deep integration with the project dashboard.
+		•	Fiverr:
+		Fiverr allows freelancers to create service listings or "gigs" with fixed prices. While this system is simple and fast for short tasks, it does not support long-term project management or live work updates. The platform lacks real-time collaboration tools and mainly operates on predefined deliverables rather than flexible project scopes.
+		•	Guru:
+		Guru supports milestone creation, payment escrow, and basic communication tools. It provides fewer job categories and has a smaller active user base compared to its competitors. It is more geared toward experienced freelancers and agencies, but it does not offer live dashboards or integrated task tracking.
+		•	Toptal:
+		Toptal is known for connecting clients with top-tier freelancers after rigorous screening. It ensures quality but is accessible only to elite professionals and enterprise-level clients. The exclusivity limits opportunities for newcomers and small businesses.
+		•	Freelancer.com:
+		Freelancer.com offers job bidding, milestone tracking, and payment handling. However, it suffers from spam bidding, limited communication tools, and a cluttered user interface, which can impact the overall experience.
+
+		Conclusion of Survey:
+		Despite offering useful features, existing freelance platforms lack unified dashboards for real-time work monitoring, seamless chat systems integrated with job progress, and a simplified user experience. This project aims to fill those gaps by developing a freelancing website that focuses on transparency, live collaboration, and ease of use.
+
+
+
+Week 3:(24/03/2025 to 05/04/2025)
+
+Methodology
+	Hardware and Software Requirements
+	•	Frontend:
+	HTML5, CSS3, and JavaScript are used to build a responsive and interactive user interface. The frontend is designed to be mobile-friendly and intuitive, ensuring ease of use for both clients and freelancers.
+	•	Backend:
+	Developed using Python (Django) – a powerful web framework that follows the MVT (Model-View-Template) architecture. Django’s in-built authentication system and ORM (Object Relational Mapping) help manage users, jobs, and messaging efficiently.
+	•	Database:
+	MySQL is used as the primary relational database for storing user information, job postings, chat logs, and dashboard data. Django ORM handles interactions between the application and the database.
+	Explanation:
+	•	Client logs in and can post jobs.
+	•	Job Posting System allows clients to create and publish jobs with specifications.
+	•	Work Dashboard displays all current and past jobs, with progress indicators and task tracking.
+	•	Chat Module enables real-time communication using WebSockets for both freelancers and clients, directly linked with the dashboard.
+	•	Profile System manages user profiles, skills, experience, and job history.
+
+
+
+Week 4:(07/04/2025 to 26/04/2025)
+
+Implementation Details
+	Module 1: Job Posting System
+	•	Functionality:
+		Clients (employers) can post job listings after logging in. Each listing includes:
+		o	Job Title
+		o	Detailed Description
+		o	Required Skills/Category
+		o	Budget
+		o	Deadline / Duration
+	•	Features:
+		o	Job visibility is filtered based on freelancers' skill sets.
+		o	Freelancers can apply or bid on listed jobs.
+		o	Status updates like "Open", "In Progress", and "Completed" are maintained in the system.
+		
+		Module 2: Work Dashboard and Real-Time Chat
+	•	Functionality:
+		Once a freelancer is hired, both the client and freelancer gain access to a shared dashboard that acts as a project workspace.
+	•	Dashboard Features:
+		o	Real-time project tracking (status, tasks, updates).
+		o	Upload and submit deliverables directly through the dashboard.
+	•	Chat System:
+		o	Implemented using Django.
+		o	Enables real-time, two-way messaging between clients and freelancers.
+		
+	Module 3: User Profiles
+	•	Functionality: Each user (freelancer or client) has a customizable profile page.
+	•	Freelancer Profile Features:
+		o	Personal info (name, email, location)
+		o	Resume upload/download option (PDF)
+		o	Skill tags, project categories
+		o	Work experience and job completion history
+		o	Star rating and reviews from clients
+		o	Profile photo
+
+
+
+
+
+
+
+
+
+
+Week 5:(28/04/2025 to 03/05/2025)
+
+Results:
+	Developed Features and Functional Outcomes
+	1.	Job Posting System:
+		o	Clients were able to successfully post jobs with complete information (title, description, budget, skills required).
+		o	Freelancers were able to view and apply to jobs relevant to their profile.
+	2.	Work Dashboard:
+		o	A real-time shared dashboard was created for freelancers and clients after job assignment.
+		o	Users could update job status (e.g., "In Progress", "Completed") and exchange deliverables within the dashboard.
+	3.	Real-Time Chat:
+		o	Real-time chat was implemented using Django Channels and WebSockets.
+		o	Users were able to send and receive messages instantly, improving communication during job execution.
+	4.	User Profiles:
+		o	Every user had a personal profile with editable details.
+		o	Freelancers could upload resumes, list skills, and view job history.
+		o	Clients could manage their hiring history and posted jobs.
+	5.	Authentication & Roles:
+		
+
+
+
+
+
