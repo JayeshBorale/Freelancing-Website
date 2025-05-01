@@ -1,5 +1,129 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 
 {% block maincontent %}
-{{profile.user.first_name}}
+<div class="profile-container">
+    <div class="profile-header">
+        {% if profile.profile_pic %}
+            <img src="{{ profile.profile_pic.url }}" alt="Profile Picture" class="profile-pic">
+        {% endif %}
+        <h2>{{ profile.user.first_name }} {{ profile.user.last_name }}</h2>
+    </div>
+
+    <div class="profile-info">
+        <p><strong>Email:</strong> {{ profile.user.email }}</p>
+        
+        {% if profile.introduction %}
+            <p><strong>Introduction:</strong> {{ profile.introduction }}</p>
+        {% endif %}
+        
+        
+            <p><strong>Skills:</strong> </p>
+        
+
+        <div class="skill-buttons">
+            {% for skill in profile.skills %}
+            <span class="skill-badge skill-color-{{ forloop.counter|slice:":5" }}">
+                {{ skill }}
+            </span>
+            {% endfor %}
+        </div>
+        
+        
+        <p><strong>Experience:</strong> {{ profile.experience }} year{{ profile.experience|pluralize }}</p>
+        
+        {% if profile.resume %}
+            <p class="resume-link"><strong>Resume:</strong> <a href="{{ profile.resume.url }}" target="_blank">Download Resume</a></p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
+{% block extra_styles%}
+<style>
+    .profile-container {
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #ffffff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border-radius: 12px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .profile-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .profile-pic {
+        width: 130px;
+        height: 130px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 3px solid #4CAF50;
+        margin-bottom: 10px;
+    }
+
+    .profile-info p {
+        margin: 10px 0;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .profile-info strong {
+        color: #4CAF50;
+    }
+
+    .resume-link a {
+        color: #2196F3;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .resume-link a:hover {
+        text-decoration: underline;
+    }
+
+    .skill-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .skill-badge {
+        color: #fff;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: capitalize;
+        transition: background-color 0.3s ease;
+    }
+    
+    .skill-badge:hover {
+        opacity: 0.9;
+    }
+    
+    /* Example colors for buttons */
+    .skill-color-1 {
+        background-color: #6f49ff;
+    }
+    
+    .skill-color-2 {
+        background-color: #ff7b54;
+    }
+    
+    .skill-color-3 {
+        background-color: #34a853;
+    }
+    
+    .skill-color-4 {
+        background-color: #fbbc05;
+    }
+    
+    .skill-color-5 {
+        background-color: #ea4335;
+    }
+</style>
+
+{% endblock%}

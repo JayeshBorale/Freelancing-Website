@@ -73,6 +73,14 @@ class Job(models.Model):
     def __str__(self):
         return self.title
 
+class JobOutput(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='job_outputs')
+    output_file = models.FileField(upload_to='job_outputs/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Output for {self.job.title}"
+
 class Profile(models.Model):
     user=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='profiles')
     introduction=models.TextField(blank=True,null=True)
@@ -107,6 +115,16 @@ class Applications(models.Model):
     def __str__(self):
         return f"{self.sending_user.username}'s Application for {self.job.title}"
 
+
+class Message(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name='messages')
+    sender = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='sent_messages')
+    receiver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='received_messages')
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Message from {self.sender.username} to {self.receiver.username} about {self.job.title}"
 
 
 

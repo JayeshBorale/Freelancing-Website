@@ -26,7 +26,7 @@
         <p>{{ job.description }}</p>
     </div>
     <div class="job-other-details">
-        <p><strong>Budget:</strong> ${{ job.budget }}</p>
+        <p><strong>Budget:</strong> {{ job.budget }} RS</p>
         <p><strong>Posted on:</strong> {{ job.time_posted|date:"F j, Y, g:i a" }}</p>
         <p><strong>Deadline:</strong> {{ job.deadline|date:"F j, Y" }}</p>
     </div>

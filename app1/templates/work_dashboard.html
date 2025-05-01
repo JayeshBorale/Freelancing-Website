@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/job.css' %}">
+{% endblock %}
+
+{% block maincontent %}
+<div class="job-container">
+    <div class="job-header">
+        <h1 class="job-title">{{ job.title }}</h1>
+        <div class="job-header-meta">
+            <p class="job-posted-by">Posted by: <span>{{ job.user.username }}</span></p>
+            <span class="job-status {{ job.status|lower }}">{{ job.status }}</span>
+        </div>
+    </div>
+
+    <div class="skill-buttons">
+        {% for skill in job.skills_required %}
+            <span class="skill-badge skill-color-{{ forloop.counter|slice:":5" }}">
+                {{ skill }}
+            </span>
+        {% endfor %}
+    </div>
+
+    <div class="job-description-section">
+        <h3>Job Description</h3>
+        <p>{{ job.description }}</p>
+    </div>
+
+    <div class="job-other-details">
+        <p><strong>Budget:</strong> {{ job.budget }} RS</p>
+        <p><strong>Posted on:</strong> {{ job.time_posted|date:"F j, Y, g:i a" }}</p>
+        <p><strong>Deadline:</strong> {{ job.deadline|date:"F j, Y" }}</p>
+    </div>
+
+    {% if job.document %}
+    <div class="job-document-section">
+        <strong>Attached Document:</strong> 
+        <a href="{{ job.document.url }}" target="_blank">View Document</a>
+    </div>
+    {% endif %}
+
+    <!-- File Upload Section -->
+    {% if request.user == job.user or request.user == job.working_user  %}
+    <div class="job-file-upload">
+        <h3>Upload Work File</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="work_file" accept=".zip, .pdf, .docx, .png, .jpg" required>
+            <button type="submit" name="action" value="upload_work_file">Submit File</button>
+        </form>
+        <br>
+        <h3> Uploaded work :</h3>
+        {% for od in output_docs%}
+        <a href="{{ od.output_file.url }}" target="_blank">{{ od.output_file.url }}</a>
+        {% endfor%}
+    </div>
+    <!-- Chat Section -->
+    <div class="job-chat-section">
+        <h3>Chat</h3>
+    
+        {% for message in chat_messages %}
+        <div class="chat-message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+            <div class="chat-avatar">{{ message.sender.username|slice:":1"|upper }}</div>
+            <div class="chat-text">
+                <p><strong>{{ message.sender.username }}:</strong> {{ message.message }}</p>
+                <small>{{ message.timestamp|date:"M d, Y H:i" }}</small>
+            </div>
+        </div>
+        {% empty %}
+        <p>No messages yet.</p>
+        {% endfor %}
+
+        {% endif %}
+        
+        <form method="post" class="chat-form">
+            {% csrf_token %}
+            <input type="text" name="chat_message" placeholder="Type your message..." required>
+            <button type="submit" name="action" value="send_chat_message">Send</button>
+        </form>
+    </div>
+
+    {% if request.user == job.working_user and output_docs  %}
+    <form method="post" style="margin-top: 20px;">
+        {% csrf_token %}
+        <button type="submit" name="action" value="request_payout" class="payout-button">Request for Payout</button>
+    </form>
+{% endif %}
+    
+
+    
+    
+</div>
+{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .job-file-upload {
+        margin-top: 20px;
+    }
+
+    .job-file-upload input[type="file"] {
+        margin-bottom: 10px;
+    }
+    .job-file-upload {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #f7f7f7;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        width: 60%;
+    }
+    
+    .job-file-upload h3 {
+        margin-bottom: 15px;
+        font-size: 18px;
+        font-weight: 600;
+    }
+    
+    .job-file-upload input[type="file"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 15px;
+    }
+    
+    .job-file-upload button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+    
+    .job-file-upload button:hover {
+        background-color: #0056b3;
+    }
+    
+
+    .job-chat-section {
+        margin-top: 30px;
+        padding: 15px;
+        background-color: #f0f0f0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        width: 60%;
+    }
+    
+    .chat-messages {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+        background: #fff;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    
+    .chat-message {
+        margin-bottom: 10px;
+    }
+    
+    .chat-message.sent {
+        text-align: right;
+    }
+    
+    .chat-message.received {
+        text-align: left;
+    }
+    
+    .chat-form input[type="text"] {
+        width: 80%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    .chat-form button {
+        padding: 8px 15px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-left: 5px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+    
+    .chat-form button:hover {
+        background-color: #218838;
+    }
+    .chat-message {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .chat-message.sent {
+        justify-content: flex-end;
+    }
+    
+    .chat-message.received {
+        justify-content: flex-start;
+    }
+    
+    .chat-avatar {
+        background-color: #007bff;
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-right: 10px;
+        flex-shrink: 0;
+    }
+    
+    .chat-message.sent .chat-avatar {
+        background-color: #28a745; /* Different color for sender */
+    }
+    
+    .chat-text {
+        background: #fff;
+        padding: 8px 12px;
+        border-radius: 8px;
+        max-width: 70%;
+    }
+    .payout-button {
+        background-color: #ffc107;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+    
+    .payout-button:hover {
+        background-color: #e0a800;
+    }
+    
+    
+</style>
+{% endblock %}

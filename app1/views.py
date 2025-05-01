@@ -162,12 +162,16 @@ class User_Profile_View(View):
     def get(self,request,pk):
         profile=get_object_or_404(Profile,user_id=pk)
         
+        if profile.skills:
+            profile.skills = profile.skills.split(',') 
+        
         return render(request,'user_profile.html',{'profile':profile})
 
 class Myjobs(View):
     def get(self,request):
-        posted_jobs=Job.objects.filter(user=request.user)
-        assigned_jobs=Job.objects.filter(working_user=request.user)
+        posted_jobs=Job.objects.filter(user=request.user).order_by('-time_posted')
+        assigned_jobs=Job.objects.filter(working_user=request.user).order_by('-time_posted')
+        
         for job in posted_jobs:
             if job.skills_required:
                 job.skills_required = job.skills_required.split(',') 
@@ -190,7 +194,7 @@ class Applicationview(View):
 
         if action == "accept":
             application.status= "accepted"
-            job.working_user=request.user
+            job.working_user=application.sending_user
             job.save()
 
         
@@ -200,3 +204,49 @@ class Applicationview(View):
         application.save()
 
         return redirect('job',id=job.id)
+
+class WorkDashboard(View):
+    def get(self,request,id):
+        job=Job.objects.get(id=id)
+        chat_messages = Message.objects.filter(job=job).order_by('timestamp')
+ 
+        if job.skills_required:
+            job.skills_required = job.skills_required.split(',') 
+        
+        output_docs=JobOutput.objects.filter(job=job)
+        return render(request,'work_dashboard.html',{'job':job,'output_docs':output_docs,'chat_messages': chat_messages})
+    
+    def post(self, request, id):
+        job = Job.objects.get(id=id)
+
+        action = request.POST.get('action')
+
+        if action == 'upload_work_file':
+            # Handle file upload
+            files = request.FILES.getlist('work_file')
+            for file in files:
+                j = JobOutput.objects.create(job=job, output_file=file)
+                j.save()
+            return redirect('work_dashboard', id=job.id)
+
+        elif action == 'send_chat_message':
+            message_text = request.POST.get('chat_message')
+            
+            if message_text:
+                if request.user == job.user:
+                    receiver = job.working_user
+                else:
+                    receiver = job.user
+
+                m=Message.objects.create(
+                    job=job,
+                    sender=request.user,
+                    receiver=receiver,
+                    message=message_text
+                )
+                m.save()
+            
+            return redirect('work_dashboard', id=job.id)
+
+        
+        return redirect('work_dashboard', id=job.id)

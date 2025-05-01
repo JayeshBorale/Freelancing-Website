@@ -32,6 +32,7 @@ urlpatterns = [
     path('user_profile/<int:pk>',User_Profile_View.as_view(),name="user_profile"),
     path('myjobs/',Myjobs.as_view(),name="myjobs"),
     path('applications/<int:id>',Applicationview.as_view(),name="applications"),
+    path('work_dashboard/<int:id>',WorkDashboard.as_view(),name="work_dashboard"),
 ]
 if settings.DEBUG:  # Serve media files in development
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

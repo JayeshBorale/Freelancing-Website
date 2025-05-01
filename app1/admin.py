@@ -38,3 +38,5 @@ admin.site.register(Job)
 
 admin.site.register(Profile)
 admin.site.register(Applications)
+admin.site.register(JobOutput)
+admin.site.register(Message)
